@@ -86,37 +86,37 @@ module "eks" {
   eks_managed_node_groups = {
     #  It's recommended to have a Managed Node group for hosting critical add-ons
     #  You can leverage nodeSelector and Taints/tolerations to distribute workloads across Managed Node group or Karpenter nodes.
-    core_node_group = {
-      name        = "core-node-group"
-      description = "EKS Core node group for hosting critical add-ons"
-      # Filtering only Secondary CIDR private subnets starting with "100.". Subnet IDs where the nodes/node groups will be provisioned
-      subnet_ids = compact([for subnet_id, cidr_block in zipmap(module.vpc.private_subnets, module.vpc.private_subnets_cidr_blocks) : substr(cidr_block, 0, 4) == "100." ? subnet_id : null])
+    # core_node_group = {
+    #   name        = "core-node-group"
+    #   description = "EKS Core node group for hosting critical add-ons"
+    #   # Filtering only Secondary CIDR private subnets starting with "100.". Subnet IDs where the nodes/node groups will be provisioned
+    #   subnet_ids = compact([for subnet_id, cidr_block in zipmap(module.vpc.private_subnets, module.vpc.private_subnets_cidr_blocks) : substr(cidr_block, 0, 4) == "100." ? subnet_id : null])
 
-      min_size     = 2
-      max_size     = 6
-      desired_size = 2
+    #   min_size     = 1
+    #   max_size     = 2
+    #   desired_size = 1
 
-      instance_types = ["m5.xlarge"]
+    #   instance_types = ["m5.large"]
 
-      ebs_optimized = true
-      block_device_mappings = {
-        xvda = {
-          device_name = "/dev/xvda"
-          ebs = {
-            volume_size = 100
-            volume_type = "gp3"
-          }
-        }
-      }
+    #   ebs_optimized = true
+    #   block_device_mappings = {
+    #     xvda = {
+    #       device_name = "/dev/xvda"
+    #       ebs = {
+    #         volume_size = 10
+    #         volume_type = "gp3"
+    #       }
+    #     }
+    #   }
 
-      labels = {
-        WorkerType    = "ON_DEMAND"
-        NodeGroupType = "core"
-      }
+    #   labels = {
+    #     WorkerType    = "ON_DEMAND"
+    #     NodeGroupType = "core"
+    #   }
 
-      tags = merge(local.tags, {
-      Name = "core-node-grp" })
-    },
+    #   tags = merge(local.tags, {
+    #   Name = "core-node-grp" })
+    # },
 
     superset_node_group = {
       name        = "superset-node-group"
@@ -124,18 +124,18 @@ module "eks" {
       # Filtering only Secondary CIDR private subnets starting with "100.". Subnet IDs where the nodes/node groups will be provisioned
       subnet_ids = compact([for subnet_id, cidr_block in zipmap(module.vpc.private_subnets, module.vpc.private_subnets_cidr_blocks) : substr(cidr_block, 0, 4) == "100." ? subnet_id : null])
 
-      min_size     = 4
-      max_size     = 8
-      desired_size = 4
+      min_size     = 1
+      max_size     = 2
+      desired_size = 1
 
-      instance_types = ["m5.xlarge"]
+      instance_types = ["m5.large"]
 
       ebs_optimized = true
       block_device_mappings = {
         xvda = {
           device_name = "/dev/xvda"
           ebs = {
-            volume_size = 100
+            volume_size = 10
             volume_type = "gp3"
           }
         }
