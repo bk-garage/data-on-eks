@@ -4,6 +4,13 @@ sidebar_position: 2
 ---
 import CollapsibleContent from '../../../../src/components/CollapsibleContent';
 
+:::caution
+
+The **AI on EKS** content **is being migrated** to a new repository.
+🔗 👉 [Read the full migration announcement »](https://awslabs.github.io/data-on-eks/docs/migration/migration-announcement)
+
+:::
+
 :::warning
 Deployment of ML models on EKS requires access to GPUs or Neuron instances. If your deployment isn't working, it’s often due to missing access to these resources. Also, some deployment patterns rely on Karpenter autoscaling and static node groups; if nodes aren't initializing, check the logs for Karpenter or Node groups to resolve the issue.
 :::
@@ -463,13 +470,13 @@ In addition to deploying CloudWatch EKS addon, we have also deployed the Kube Pr
 First, let's verify the services deployed by the Kube Prometheus stack:
 
 ```bash
-kubectl get svc -n kube-prometheus-stack
+kubectl get svc -n monitoring
 ```
 
 You should see output similar to this:
 
 ```text
-kubectl get svc -n kube-prometheus-stack
+kubectl get svc -n monitoring
 NAME                                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)             AGE
 kube-prometheus-stack-grafana                    ClusterIP   172.20.252.10    <none>        80/TCP              11d
 kube-prometheus-stack-kube-state-metrics         ClusterIP   172.20.34.181    <none>        8080/TCP            11d
@@ -509,7 +516,7 @@ To create a new Grafana dashboard to monitor these metrics, follow the steps bel
 
 ```bash
 - Port-forward Grafana service:
-kubectl port-forward svc/kube-prometheus-stack-grafana 8080:80 -n kube-prometheus-stack
+kubectl port-forward svc/kube-prometheus-stack-grafana 8080:80 -n monitoring
 
 - Grafana Admin user
 admin

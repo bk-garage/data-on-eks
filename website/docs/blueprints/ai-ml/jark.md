@@ -6,6 +6,13 @@ import CollapsibleContent from '../../../src/components/CollapsibleContent';
 
 # JARK on EKS
 
+:::caution
+
+The **AI on EKS** content **is being migrated** to a new repository.
+🔗 👉 [Read the full migration announcement »](https://awslabs.github.io/data-on-eks/docs/migration/migration-announcement)
+
+:::
+
 :::warning
 Deployment of ML models on EKS requires access to GPUs or Neuron instances. If your deployment isn't working, it’s often due to missing access to these resources. Also, some deployment patterns rely on Karpenter autoscaling and static node groups; if nodes aren't initializing, check the logs for Karpenter or Node groups to resolve the issue.
 :::
@@ -87,9 +94,12 @@ Clone the repository
 ```bash
 git clone https://github.com/awslabs/data-on-eks.git
 ```
+:::info
+If you are using profile for authentication
+set your `export AWS_PROFILE="<PROFILE_name>"` to the desired profile name
+:::
 
 Navigate into one of the example directories and run `install.sh` script
-
 
 :::info
 Ensure that you update the region in the `variables.tf` file before deploying the blueprint.
@@ -99,7 +109,7 @@ For example, set your `export AWS_DEFAULT_REGION="<REGION>"` to the desired regi
 
 
 ```bash
-cd data-on-eks/ai-ml/jark-stack/ && chmod +x install.sh
+cd data-on-eks/ai-ml/jark-stack/terraform && chmod +x install.sh
 ./install.sh
 ```
 
@@ -168,7 +178,7 @@ To avoid unwanted charges to your AWS account, delete all the AWS resources crea
 This script will cleanup the environment using `-target` option to ensure all the resources are deleted in correct order.
 
 ```bash
-cd data-on-eks/ai-ml/jark-stack/ && chmod +x cleanup.sh
+cd data-on-eks/ai-ml/jark-stack/terraform && chmod +x cleanup.sh
 ```
 
 </CollapsibleContent>
